@@ -34,10 +34,10 @@ const changeChannelName = asyncHandler( async(req, res) =>{
 const changeDescription = asyncHandler( async(req, res) =>{
     const { description } = req.body;
 
-    const channel = await Channel.findById(req.channel._id);
-
+    const channel = await Channel.findById(req.channel?._id);
+    
     if(!channel){
-        throw new ApiError(404, "Channel not found", { channelId : req.channel._id });
+        throw new ApiError(404, "Channel not found", { channelId : req.channel?._id });
     }
 
     channel.description = description;

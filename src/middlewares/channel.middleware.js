@@ -11,7 +11,7 @@ const verifyChannelOwner = asyncHandler( async(req, res, next) =>{
         throw new ApiError(404, "Channel not found", { channelId : req.user?._id });
     }
 
-    if(channel.owner.toString() !== req.user._id.toString()){
+    if(channel.owner.toString() !== req.user?._id.toString()){
         throw new ApiError(403, "You are not the owner of this channel");
     }
 
