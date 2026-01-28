@@ -12,7 +12,21 @@ const subscriptionSchema = new mongoose.Schema(
             type : mongoose.Schema.Types.ObjectId,
             ref : 'Channel',
             required : true
-        }
+        },
+
+        followers : {
+            type : [mongoose.Schema.Types.ObjectId],
+            ref : 'User',
+            default : [],
+        },
+
+        following : {
+            type : [mongoose.Schema.Types.ObjectId],
+            ref : 'User',
+            default : [],
+
+        },
+        
     }, {timestamps : true}
 );
 
