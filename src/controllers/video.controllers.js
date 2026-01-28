@@ -6,9 +6,7 @@ import ApiError from "../utils/ApiError.js";
 
 import asyncHandler from "../utils/asyncHandler.js";
 
-import { Channel } from "../models/channel.models.js";
-
-import checkVideoOwner from "../middlewares/video.middlewares.js";
+import { loadVideoByUrl, loadVideoById, verifyVideoOwner } from "../middlewares/video.middlewares.js";
 
 const changeTitle = asyncHandler( async(req, res) =>{
     const { videoUrl, title } = req.body;
