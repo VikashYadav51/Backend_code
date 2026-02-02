@@ -10,12 +10,17 @@ import { User } from "../models/user.models.js";
 
 const verifyJWT = asyncHandler( async(req, res, next) =>{
     const token = req.cookies?.accessToken || req.header("Authorization")?.replace("Bearer ", "");
+    
+    console.log("Authorization header:", req.headers.authorization);
+    console.log("Token type:", typeof token);
+    console.log("Token value:", token);
+
 
     if(!token){
         throw new ApiError(401, 'unauthorised Access', token)
     }
 
-    const decodedInformation =  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+    const decodedInformation =  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET );
 
     if(!decodedInformation){
         throw new ApiError(401, 'Decoded information did not matched', decodedInformation);

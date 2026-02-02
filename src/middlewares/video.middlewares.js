@@ -21,7 +21,11 @@ const loadVideoByUrl = asyncHandler(async (req, res, next) => {
   }
 
   req.video = video;
-  next();
+  if (typeof next === 'function') {
+    next();
+  } else {
+    throw new ApiError(500, "Middleware chain misconfigured: next is not a function");
+  }
 });
 
 
@@ -39,7 +43,11 @@ const loadVideoById = asyncHandler(async (req, res, next) => {
   }
 
   req.video = video;
-  next();
+  if (typeof next === 'function') {
+    next();
+  } else {
+    throw new ApiError(500, "Middleware chain misconfigured: next is not a function");
+  }
 });
 
 
