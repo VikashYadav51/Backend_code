@@ -11,9 +11,9 @@ import { User } from "../models/user.models.js";
 const verifyJWT = asyncHandler( async(req, res, next) =>{
     const token = req.cookies?.accessToken || req.header("Authorization")?.replace("Bearer ", "");
     
-    console.log("Authorization header:", req.headers.authorization);
-    console.log("Token type:", typeof token);
-    console.log("Token value:", token);
+    // console.log("Authorization header:", req.headers.authorization);
+    // console.log("Token type:", typeof token);
+    // console.log("Token value:", token);
 
 
     if(!token){
