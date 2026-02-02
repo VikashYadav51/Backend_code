@@ -45,8 +45,8 @@ app.use((err, req, res, next) =>{
         message : err.message,
         err : err.error || err,
         stack : err.stack,
-    })
-})
+    });
+});
 
 
 export default app;
