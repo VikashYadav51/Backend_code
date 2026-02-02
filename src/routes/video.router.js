@@ -1,6 +1,5 @@
 import express from 'express';
 import verifyJWT from '../middlewares/auth.middlewares.js';
-import { loadVideoByUrl, loadVideoById, verifyVideoOwner } from '../middlewares/video.middlewares.js';
 
 import {
   changeTitle,
