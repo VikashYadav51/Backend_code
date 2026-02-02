@@ -176,6 +176,7 @@ const updatePassword = asyncHandler( async( req, res) =>{
     }
 
     const user = await User.findById(req.user?._id);
+
     if(!user){
         throw new ApiError(404, "User not found", { oldPassword, newPassword });
     }
@@ -188,6 +189,13 @@ const updatePassword = asyncHandler( async( req, res) =>{
     user.password = newPassword;
 
     const savepassword = await user.save({ validateBeforeSave : false });
+
+    if(!savepassword){
+        throw new ApiError(500, "Something went wrong while updating the password", { oldPassword, newPassword });
+    }
+
+    console.log("savePassword ", savepassword);
+
 
     return res.status(200).json(
         new ApiResponse(200, "Password updated successfully", {})
@@ -294,8 +302,10 @@ const getProfile = asyncHandler( async(req, res) =>{
         throw new ApiError(404, "User not found");
     }
 
+    const currentUser = await User.findById(req.user?._id).select("-password -refreshToken");
+
     return res.status(200).json(
-        new ApiResponse(200, "User profile fetched successfully", user)
+        new ApiResponse(200, "User profile fetched successfully", currentUser)
     )
 });
 
