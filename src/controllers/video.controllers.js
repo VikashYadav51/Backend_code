@@ -8,10 +8,26 @@ import asyncHandler from '../utils/asyncHandler.js';
 
 import  uploadOnCloudinary  from '../utils/cloudinary.js';
 
-const uploadVideo = asyncHandler( async(req, res) =>{
-    
-})
 
+
+const uplaoadVideo = asyncHandler( async (req, res) =>{
+    const videoLocalPath = req.files?. video?.[0]?.path;
+    if(!videoLocalPath){
+        throw new ApiError(400, "Video is required", { videoLocalPath });
+    }
+
+    const video = await uploadOnCloudinary(videoLocalPath);
+
+    if(!video){
+        throw new ApiError(400, "Video upload failed", { videoLocalPath });
+    }
+
+    video.videoUrl = video.url;
+
+    return res.status(200).json(
+        new ApiResponse(200, "Video uploaded successfully", video)
+    )
+})
 
 const changeTitle = asyncHandler( async(req, res) =>{
     const { videoUrl, title } = req.body;
@@ -115,13 +131,32 @@ const updateDislikes = asyncHandler( async(req, res) =>{
     );
 });
 
+const upadateComment = asyncHandler( async(req, res) =>{
+    const { videoUrl, comment } = req.body;
+
+    const video = await Video.findOne({ videoUrl });
+
+    if(!video){
+        throw new ApiError(404, "Video not found", { videoUrl });
+    }
+
+    video.comments = comment;
+    await video.save({validateBeforeSave : true});
+    
+    return res.status(200).json(
+        new ApiResponse(200, video, "Comments changed successfully")
+    );
+})
+
 
 export {
-    uploadVideo,
+    uplaoadVideo,
     changeTitle,
     changeDescription,
     changeTags,
     updateLikes,
     updateViews,
     updateDislikes,
+    upadateComment,
+
 }
