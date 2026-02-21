@@ -15,7 +15,7 @@ const coreOptions = {
 }
 
 
-// Set the middlewares.........
+// data Formation Set Up.........
 app.use(cors(coreOptions));
 app.use(express.json({limit : '200kb'}));
 app.use(express.urlencoded({extended : true, limit : '200kb'}));
